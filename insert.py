@@ -10,10 +10,14 @@
 #   "cards": [
 #     {
 #       "front": "<front>",
-#       "back": "<back>"
+#       "back": "<back>",
+#       "score": 0
 #     },
 #     ...
 # }
+
+# TODO
+# - Ignore duplicates.
 
 import json
 import sys
@@ -62,7 +66,8 @@ for line in word_lines:
     front, back = line.strip().split(":")
     cards.append({
         "front": front.rstrip(),
-        "back": back.lstrip()
+        "back": back.lstrip(),
+        "score": 0
     })
 
 # Output the result into a JSON file
