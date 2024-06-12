@@ -1,0 +1,5 @@
+The basic idea is, I need the following:
+
+1. test - for testing myself with flashcards. Default is 50 of worst score, newer first, correct once.
+2. insert - for transferring new words from a CSV-like format to JSON.
+3. reset - for resetting the weights (scores) of all words.
