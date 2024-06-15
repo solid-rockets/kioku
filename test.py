@@ -1,12 +1,26 @@
 import sys
 import json
+import os
 
-# Global variables
+# GLOBAL VARIABLES.
 filename = ""
 cards = []
 testing_cards = []
 max_cards = 50 # Default for now; will provide arg in the future.
+termWidth, termHeight = os.get_terminal_size()
 
+# HELPER FUNCTIONS.
+def checkAnyLeftToTest():
+  for card in testing_cards:
+    if not card["was_correct_once"]:
+      return True
+  return False
+
+def clearScreen():
+   for i in range(termHeight):
+      print()
+
+# MAIN LOGIC
 # Get filename from args
 if len(sys.argv) < 2:
   print("Usage: python reset.py <filename>")
@@ -58,20 +72,30 @@ for score in scores:
 
 # Continue the test until all cards are correct once - mark as "was_correct_once".
 # Remove the "was_correct_once" mark from all cards after the test.
+clearScreen()
 
+while checkAnyLeftToTest():
+  for card in testing_cards:
+    if card["was_correct_once"]:
+      continue
+
+    input(card["front"])
+    letter = input(f"{card['back']}\n\n(y/n) ")
+
+    clearScreen()
+    # Update the score.
+    if letter == "y":
+        card["score"] += 1
+        card["was_correct_once"] = True
+    else:
+        card["score"] -= 2
+
+# Remove the "was_correct_once" mark from all cards after the test.
 for card in testing_cards:
-  if card["was_correct_once"]:
-    continue
+  del card["was_correct_once"]
 
-  input(card["front"])
-  letter = input(card["back"])
+# Save the updated cards to the file.
+json_data["cards"] = cards
 
-  print("-----")
-  # Update the score.
-  if letter == "y":
-      card["score"] += 1
-      card["was_correct_once"] = True
-  else:
-      card["score"] -= 2
-
-# TODO: finish
+with open(filename, "w") as file:
+  json.dump(json_data, file)
