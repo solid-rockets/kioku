@@ -79,7 +79,6 @@ for line in word_lines:
     # Ignore duplicates
     if checkCardIsDuplicate(cards, front):
         # TODO: replace existing card with new one.
-        print(f"Duplicate found: {front}")
         continue
 
     # All good.

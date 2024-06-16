@@ -104,14 +104,6 @@ def key_handler(event):
 
   letter = event.char
 
-  # Make sure a valid card is selected.
-  if not checkAnyLeftToTest():
-    root.quit()
-    return
-
-  while current_card["was_correct_once"]:
-    current_card = current_card["next"]
-
   # Update the screen
   if screen_state == "front": # Why? Actions ON any key.
     back_text_var.set(current_card["back"].replace("　", "\n"))
@@ -125,13 +117,22 @@ def key_handler(event):
     else:
       current_card["score"] -= 2
 
+    # Make sure a valid card is selected.
+    if not checkAnyLeftToTest():
+      root.quit()
+      return
+
+    current_card = current_card["next"]
+
+    while current_card["was_correct_once"]:
+      current_card = current_card["next"]
+
     front_text_var.set(current_card["front"])
     back_text_var.set("")
     screen_state = "front"
 
   # Always update these.
   score_text_var.set(f"Score: {score}/{max_cards}")
-  current_card = current_card["next"]
 
 root.bind("<Key>", key_handler)
 root.mainloop()
