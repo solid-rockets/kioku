@@ -14,7 +14,7 @@ screen_state = "front" # or "back"
 
 root = tkinter.Tk()
 root.title("kioku")
-root.geometry("400x400")
+root.geometry("800x400")
 
 score_text_var = tkinter.StringVar()
 front_text_var = tkinter.StringVar()
@@ -97,6 +97,10 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 # Continue the test until all cards are correct once - mark as "was_correct_once".
 # Remove the "was_correct_once" mark from all cards after the test.
 def key_handler(event):
+  global current_card
+  global score
+  global screen_state
+
   letter = event.char
 
   # Make sure a valid card is selected.
@@ -105,6 +109,7 @@ def key_handler(event):
     return
 
   while current_card["was_correct_once"]:
+    print(current_card)
     current_card = current_card["next"]
 
   # Update the screen
@@ -125,6 +130,7 @@ def key_handler(event):
       current_card["score"] -= 2
 
     score_text_var.set(f"Score: {score}/{max_cards}")
+    current_card = current_card["next"]
 
 root.bind("<Key>", key_handler)
 root.mainloop()
