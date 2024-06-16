@@ -20,8 +20,6 @@ score_text_var = tkinter.StringVar()
 front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
 
-front_text_var.set("Press any key.")
-
 # score, front, back
 tkinter.Label(root, textvariable=score_text_var, font=("Arial", 20)).pack()
 tkinter.Label(root, textvariable=front_text_var, font=("Arial", 80)).pack()
@@ -96,6 +94,9 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 
 # Continue the test until all cards are correct once - mark as "was_correct_once".
 # Remove the "was_correct_once" mark from all cards after the test.
+front_text_var.set(current_card["front"])
+back_text_var.set("")
+
 def key_handler(event):
   global current_card
   global score
@@ -109,25 +110,24 @@ def key_handler(event):
     return
 
   while current_card["was_correct_once"]:
-    print(current_card)
     current_card = current_card["next"]
 
   # Update the screen
-  if screen_state == "front":
-    front_text_var.set(current_card["front"])
-    back_text_var.set("")
-    # TODO: fix state change
+  if screen_state == "front": # Why? Actions ON any key.
+    back_text_var.set(current_card["back"].replace("　", "\n"))
+    screen_state = "back"
     
   elif screen_state == "back":
-    back_text_var.set(current_card["back"].replace("　", "\n"))
-
     if letter == "y":
       current_card["score"] += 1
       current_card["was_correct_once"] = True
       score += 1
     else:
       current_card["score"] -= 2
-    # TODO: fix state change
+
+    front_text_var.set(current_card["front"])
+    back_text_var.set("")
+    screen_state = "front"
 
   # Always update these.
   score_text_var.set(f"Score: {score}/{max_cards}")
