@@ -73,7 +73,7 @@ for score in scores:
               break
 
 # Testing cards selected - link them circularly.
-for i in range(len(testing_cards) - 1):
+for i in range(len(testing_cards)):
   if i == len(testing_cards) - 1:
       testing_cards[i]["next"] = testing_cards[0]
   else:
@@ -116,11 +116,10 @@ def key_handler(event):
   if screen_state == "front":
     front_text_var.set(current_card["front"])
     back_text_var.set("")
-    screen_state = "back"
+    # TODO: fix state change
     
   elif screen_state == "back":
-    back_text_var.set(current_card["back"])
-    screen_state = "front"
+    back_text_var.set(current_card["back"].replace("　", "\n"))
 
     if letter == "y":
       current_card["score"] += 1
@@ -128,9 +127,11 @@ def key_handler(event):
       score += 1
     else:
       current_card["score"] -= 2
+    # TODO: fix state change
 
-    score_text_var.set(f"Score: {score}/{max_cards}")
-    current_card = current_card["next"]
+  # Always update these.
+  score_text_var.set(f"Score: {score}/{max_cards}")
+  current_card = current_card["next"]
 
 root.bind("<Key>", key_handler)
 root.mainloop()
