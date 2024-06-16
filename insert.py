@@ -16,9 +16,6 @@
 #     ...
 # }
 
-# TODO
-# - Ignore duplicates.
-
 import json
 import sys
 
@@ -81,6 +78,7 @@ for line in word_lines:
 
     # Ignore duplicates
     if checkCardIsDuplicate(cards, front):
+        # TODO: replace existing card with new one.
         print(f"Duplicate found: {front}")
         continue
 

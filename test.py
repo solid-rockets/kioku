@@ -8,6 +8,7 @@ cards = []
 testing_cards = []
 max_cards = 50 # Default for now; will provide arg in the future.
 termWidth, termHeight = os.get_terminal_size()
+score = 0
 
 # HELPER FUNCTIONS.
 def checkAnyLeftToTest():
@@ -79,7 +80,9 @@ while checkAnyLeftToTest():
     if card["was_correct_once"]:
       continue
 
-    input(card["front"])
+    front_text = card["front"]
+    score_text = f"{score}/{max_cards}"
+    input(f"{front_text} {score_text}")
     letter = input(f"{card['back']}\n\n(y/n) ")
 
     clearScreen()
@@ -87,6 +90,7 @@ while checkAnyLeftToTest():
     if letter == "y":
         card["score"] += 1
         card["was_correct_once"] = True
+        score += 1
     else:
         card["score"] -= 2
 
