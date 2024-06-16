@@ -71,7 +71,11 @@ if must_read_old_json:
 
 # Append the new flashcards to the list
 for line in word_lines:
-    front, back = line.strip().split(":")
+    stripped = line.strip()
+    if stripped[0] == "#":
+        continue
+
+    front, back = stripped.split(":")
     front = front.strip()
     back = back.strip()
 
