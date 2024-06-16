@@ -21,9 +21,9 @@ front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
 
 # score, front, back
-tkinter.Label(root, textvariable=score_text_var, font=("Arial", 20)).pack()
-tkinter.Label(root, textvariable=front_text_var, font=("Arial", 80)).pack()
-tkinter.Label(root, textvariable=back_text_var, font=("Arial", 40)).pack()
+tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15)).pack()
+tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60)).pack()
+tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30)).pack()
 
 # HELPER FUNCTIONS.
 def checkAnyLeftToTest():
