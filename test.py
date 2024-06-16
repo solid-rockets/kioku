@@ -1,15 +1,31 @@
 import sys
 import json
-import os
+import tkinter
 
 # GLOBAL VARIABLES.
 filename = ""
 cards = []
 testing_cards = []
+current_card = None
 max_cards = 50 # Default for now; will provide arg in the future.
 # TODO: replace max_cards with smaller number if not enought cards.
-termWidth, termHeight = os.get_terminal_size()
 score = 0
+screen_state = "front" # or "back"
+
+root = tkinter.Tk()
+root.title("kioku")
+root.geometry("400x400")
+
+score_text_var = tkinter.StringVar()
+front_text_var = tkinter.StringVar()
+back_text_var = tkinter.StringVar()
+
+front_text_var.set("Press any key.")
+
+# score, front, back
+tkinter.Label(root, textvariable=score_text_var, font=("Arial", 20)).pack()
+tkinter.Label(root, textvariable=front_text_var, font=("Arial", 80)).pack()
+tkinter.Label(root, textvariable=back_text_var, font=("Arial", 40)).pack()
 
 # HELPER FUNCTIONS.
 def checkAnyLeftToTest():
@@ -17,10 +33,6 @@ def checkAnyLeftToTest():
     if not card["was_correct_once"]:
       return True
   return False
-
-def clearScreen():
-   for i in range(termHeight):
-      print()
 
 # MAIN LOGIC
 # Get filename from args
@@ -60,6 +72,16 @@ for score in scores:
           if len(testing_cards) >= max_cards:
               break
 
+# Testing cards selected - link them circularly.
+for i in range(len(testing_cards) - 1):
+  if i == len(testing_cards) - 1:
+      testing_cards[i]["next"] = testing_cards[0]
+  else:
+    testing_cards[i]["next"] = testing_cards[i + 1]
+
+current_card = testing_cards[0]
+max_cards = len(testing_cards) # For proper score in case of small decks.
+
 # Cards for testing have been prepared.
 # Start the test.
 
@@ -74,30 +96,44 @@ for score in scores:
 
 # Continue the test until all cards are correct once - mark as "was_correct_once".
 # Remove the "was_correct_once" mark from all cards after the test.
-clearScreen()
+def key_handler(event):
+  letter = event.char
 
-while checkAnyLeftToTest():
-  for card in testing_cards:
-    if card["was_correct_once"]:
-      continue
+  # Make sure a valid card is selected.
+  if not checkAnyLeftToTest():
+    root.quit()
+    return
 
-    front_text = card["front"]
-    score_text = f"{score}/{max_cards}"
-    input(f"{front_text} {score_text}")
-    letter = input(f"{card['back']}\n\n(y/n) ")
+  while current_card["was_correct_once"]:
+    current_card = current_card["next"]
 
-    clearScreen()
-    # Update the score.
+  # Update the screen
+  if screen_state == "front":
+    front_text_var.set(current_card["front"])
+    back_text_var.set("")
+    screen_state = "back"
+    
+  elif screen_state == "back":
+    back_text_var.set(current_card["back"])
+    screen_state = "front"
+
     if letter == "y":
-        card["score"] += 1
-        card["was_correct_once"] = True
-        score += 1
+      current_card["score"] += 1
+      current_card["was_correct_once"] = True
+      score += 1
     else:
-        card["score"] -= 2
+      current_card["score"] -= 2
 
-# Remove the "was_correct_once" mark from all cards after the test.
+    score_text_var.set(f"Score: {score}/{max_cards}")
+
+root.bind("<Key>", key_handler)
+root.mainloop()
+
+# CLEAN UP AFTER MAIN LOGIC IS COMPLETED.
+# Remove the "was_correct_once" and "next" mark from all cards after the test.
 for card in testing_cards:
   del card["was_correct_once"]
+  del card["next"]
 
 # Save the updated cards to the file.
 json_data["cards"] = cards
