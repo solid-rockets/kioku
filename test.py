@@ -7,6 +7,7 @@ filename = ""
 cards = []
 testing_cards = []
 max_cards = 50 # Default for now; will provide arg in the future.
+# TODO: replace max_cards with smaller number if not enought cards.
 termWidth, termHeight = os.get_terminal_size()
 score = 0
 
