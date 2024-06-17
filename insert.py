@@ -29,11 +29,12 @@ input_json_path = ""
 output_json_path = ""
 
 # HELPER FUNCTIONS.
-def checkCardIsDuplicate(list, front):
+def getAnyDuplicate(list, front):
+    # TODO: Use a dictionary for faster lookup.
     for card in list:
         if card["front"] == front:
-            return True
-    return False
+            return card
+    return None
 
 # MAIN LOGIC.
 # Get filenames from args: input of fresh, input of old JSON, and output JSON
@@ -77,16 +78,16 @@ for line in word_lines:
     back = back.strip()
 
     # Ignore duplicates
-    if checkCardIsDuplicate(cards, front):
-        # TODO: replace existing card with new one.
-        continue
+    dup = getAnyDuplicate(cards, front)
 
-    # All good.
-    cards.append({
-        "front": front,
-        "back": back,
-        "score": 0
-    })
+    if dup:
+        dup["back"] = back
+    else:
+        cards.append({
+            "front": front,
+            "back": back,
+            "score": 0
+        })
 
 # Output the result into a JSON file
 with open(output_json_path, "w") as file:
