@@ -9,7 +9,7 @@ testing_cards = []
 current_card = None
 max_cards = 50 # Default for now; will provide arg in the future.
 # TODO: replace max_cards with smaller number if not enought cards.
-score = 0
+num_correct_once = 0
 screen_state = "front" # or "back"
 
 root = tkinter.Tk()
@@ -39,6 +39,14 @@ if len(sys.argv) < 2:
   exit()
 
 filename = sys.argv[1]
+
+# Analyze arguments.
+# Get max from arg: "--max=<number>" or "-m=<number>"
+for arg in sys.argv:
+  if arg.startswith("--max="):
+    max_cards = int(arg[6:])
+  elif arg.startswith("-m="):
+    max_cards = int(arg[3:])
 
 # Load the JSON file cards.
 with open(filename, "r") as file:
@@ -96,10 +104,11 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 # Remove the "was_correct_once" mark from all cards after the test.
 front_text_var.set(current_card["front"])
 back_text_var.set("")
+score_text_var.set(f"Score: {num_correct_once}/{max_cards}")
 
 def key_handler(event):
   global current_card
-  global score
+  global num_correct_once
   global screen_state
 
   letter = event.char
@@ -113,7 +122,7 @@ def key_handler(event):
     if letter == "y":
       current_card["score"] += 1
       current_card["was_correct_once"] = True
-      score += 1
+      num_correct_once += 1
     else:
       current_card["score"] -= 2
 
@@ -132,7 +141,7 @@ def key_handler(event):
     screen_state = "front"
 
   # Always update these.
-  score_text_var.set(f"Score: {score}/{max_cards}")
+  score_text_var.set(f"Score: {num_correct_once}/{max_cards}")
 
 root.bind("<Key>", key_handler)
 root.mainloop()
