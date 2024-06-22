@@ -75,5 +75,4 @@ with open(input_file_path, "a") as file:
 
     output_line = convertToKiokuLine(input_line)
     file.write(output_line + "\n")
-  
-  file.flush()
+    file.flush()
