@@ -7,9 +7,10 @@ filename = ""
 cards = []
 testing_cards = []
 current_card = None
+# TODO: args for the following two lines.
 max_cards = 50 # Default for now; will provide arg in the future.
-# TODO: replace max_cards with smaller number if not enought cards.
-num_correct_once = 0
+max_correct = 1 # How many times card is shown before it is removed from the test.
+num_correct_total = 0
 screen_state = "front" # or "back"
 
 root = tkinter.Tk()
@@ -28,9 +29,15 @@ tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30)).pack()
 # HELPER FUNCTIONS.
 def checkAnyLeftToTest():
   for card in testing_cards:
-    if not card["was_correct_once"]:
+    if not card["is_testing_over"]:
       return True
   return False
+
+def getScoreString():
+  global num_correct_total
+  global max_cards
+  global max_correct
+  return f"Score: {num_correct_total}/{max_cards * max_correct}"
 
 # MAIN LOGIC
 # Get filename from args
@@ -73,7 +80,8 @@ for score in scores:
   for card in cards:
       if card["score"] == score:
           testing_cards.append(card)
-          card["was_correct_once"] = False
+          card["is_testing_over"] = False
+          card["correct_num"] = 0
 
           if len(testing_cards) >= max_cards:
               break
@@ -100,15 +108,15 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 # 1) Front only - show the front of each card in order.
 # 2) Both sides - show the front and back of each card in order.
 
-# Continue the test until all cards are correct once - mark as "was_correct_once".
-# Remove the "was_correct_once" mark from all cards after the test.
+# Continue the test until all cards are correct once - mark as "is_testing_over".
+# Remove the "is_testing_over" mark from all cards after the test.
 front_text_var.set(current_card["front"])
 back_text_var.set("")
-score_text_var.set(f"Score: {num_correct_once}/{max_cards}")
+score_text_var.set(getScoreString())
 
 def key_handler(event):
   global current_card
-  global num_correct_once
+  global num_correct_total
   global screen_state
 
   letter = event.char
@@ -122,8 +130,12 @@ def key_handler(event):
   elif screen_state == "back":
     if letter == "y":
       current_card["score"] += 1
-      current_card["was_correct_once"] = True
-      num_correct_once += 1
+      current_card["correct_num"] += 1
+      num_correct_total += 1
+
+      if current_card["correct_num"] == max_correct:
+        current_card["is_testing_over"] = True
+
     else:
       current_card["score"] -= 2
 
@@ -134,7 +146,7 @@ def key_handler(event):
 
     current_card = current_card["next"]
 
-    while current_card["was_correct_once"]:
+    while current_card["is_testing_over"]:
       current_card = current_card["next"]
 
     front_text_var.set(current_card["front"])
@@ -142,15 +154,15 @@ def key_handler(event):
     screen_state = "front"
 
   # Always update these.
-  score_text_var.set(f"Score: {num_correct_once}/{max_cards}")
+  score_text_var.set(getScoreString())
 
 root.bind("<Key>", key_handler)
 root.mainloop()
 
 # CLEAN UP AFTER MAIN LOGIC IS COMPLETED.
-# Remove the "was_correct_once" and "next" mark from all cards after the test.
+# Remove the "is_testing_over" and "next" mark from all cards after the test.
 for card in testing_cards:
-  del card["was_correct_once"]
+  del card["is_testing_over"]
   del card["next"]
 
 # Save the updated cards to the file.
