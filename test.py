@@ -116,6 +116,7 @@ def key_handler(event):
   # Update the screen
   if screen_state == "front": # Why? Actions ON any key.
     back_text_var.set(current_card["back"].replace("　", "\n"))
+    back_text_var.set(current_card["back"].replace("<br>", "\n"))
     screen_state = "back"
     
   elif screen_state == "back":
