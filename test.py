@@ -39,6 +39,14 @@ def getScoreString():
   global max_correct
   return f"Score: {num_correct_total}/{max_cards * max_correct}"
 
+def getArgument(arg_name):
+  arg_name = arg_name + "="
+
+  for arg in sys.argv:
+    if arg_name in arg:
+      return arg.split("=")[1]
+  return ""
+
 # MAIN LOGIC
 # Get filename from args
 if len(sys.argv) < 2:
@@ -46,6 +54,17 @@ if len(sys.argv) < 2:
   exit()
 
 filename = sys.argv[1]
+
+# Other args.
+# --max=<number> or -m=<number> - number of cards to test.
+full_arg = getArgument("--max")
+if full_arg != "":
+  max_cards = int(full_arg)
+
+# --correct=<number> or -c=<number> - number of times card is shown before it is removed from the test.
+full_arg = getArgument("--correct")
+if full_arg != "":
+  max_correct = int(full_arg)
 
 # Analyze arguments.
 # Get max from arg: "--max=<number>" or "-m=<number>"
