@@ -40,6 +40,7 @@ def removeAllGroups(input_line, groups):
     
 def convertToKiokuLine(input_line):
     # Get the raw extracts.
+    first_letter = input_line[0]
     jpWord = getJapaneseWord(input_line)
     classAttrs = getAllClassAttributes(input_line)
     reading = extractHiragana(classAttrs[0])
@@ -56,8 +57,12 @@ def convertToKiokuLine(input_line):
 
     # Build the line and return.
     breakpoint = "<br>" if reading != "" else ""
-    return f"{jpWord}:{reading}{breakpoint}{enDefinition}"
-    
+
+    if first_letter == "　":
+      # For special cases, where both kanji and reading are present, but I need the reading only.
+      return f"{reading}:{enDefinition}"
+    else:
+      return f"{jpWord}:{reading}{breakpoint}{enDefinition}"
 
 # MAIN LOGIC.
 # Get the filename from args.
