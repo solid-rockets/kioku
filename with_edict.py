@@ -16,6 +16,7 @@ import re
 cards = []
 
 input_words = []
+edict_lines = []
 
 edict_path = ""
 input_words_path = ""
@@ -43,29 +44,45 @@ output_lines_path = sys.argv[3]
 with open(input_words_path, "r") as file:
     input_words = file.readlines()
 
+with open(edict_path, "r") as file:
+    # TODO: optimize by putting all in a dictionary indexed by JP word.
+    edict_lines = file.readlines()
+
 with open(output_lines_path, "w") as file:
-    with open(edict_path, "r") as edict:
-        for word in input_words:
-            found = False
+    for word in input_words:
+        word = word.strip()
 
-            for line in edict: # The dictionary file is too big to load into memory.
-                # OPTI IDEA: save the seeker.
+        # Must watch for two cases
+        # 1. single kanji word followed by hiragana and a space
+        # 2. two kanji word followed by a space
+        #
+        # NOTE: I may want to consider compound words, too.
+        # TODO: skipping one-kanji words for now; please fix.
+        if len(word) == 1:
+            continue
 
-                # The entry is followed by a space and a reading.
-                # PLEASE NOTE: FIFO - first definition only.
-                word_re = f"^{word}[{kanji_ranges}]+ " # 
-                word_match = re.match(word_re, line)
-                if re.match(word_re, line):
-                    jp_word = word_match.group(0)
-                    reading = re.search(r"\[([^\]]+)\]", line).group(1)
-                    translation = re.search(r"/([^/]+)/", line).group(1)
+        re_1 = f"^{word}[あ-ん]* "
+        re_2 = f"^{word} "
 
-                    file.write(f"{word}:{reading}<br>{translation}\n")
-                    found = True
-                    break
+        word_re = re_2 if len(word) != 1 else re_1
 
-            if not found:
-                # Print to standard error.
-                print(f"{word}", file=sys.stderr)
+        found = False
 
-            edict.seek(0)     
+        for line in edict_lines:
+            # The entry is followed by a space and a reading.
+            # PLEASE NOTE: FIFO - first definition only.
+            word_match = re.match(word_re, line)
+            if word_match:
+                jp_word = word_match.group(0)
+                reading = re.search(r"\[([^\]]+)\]", line).group(1)
+                translation_full = re.search(r"/(.*)/", line).group(1)
+                translation_first = translation_full.split("/")[0]
+                translation = re.sub(r"^(\(.*\) )+", "", translation_first).strip()
+
+                file.write(f"{word}:{reading}<br>{translation}\n")
+                found = True
+                break
+
+        if not found:
+            # Print to standard error.
+            print(f"{word}", file=sys.stderr)  
