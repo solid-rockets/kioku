@@ -156,7 +156,7 @@ def key_handler(event):
         current_card["is_testing_over"] = True
 
     else:
-      current_card["score"] -= 2
+      current_card["score"] -= 1
 
     # Make sure a valid card is selected.
     if not checkAnyLeftToTest():
