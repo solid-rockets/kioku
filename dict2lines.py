@@ -1,3 +1,5 @@
+# PLEASE NOTE: will be replaced with a direct interface to the EDICT file.
+
 # The following code automatically analyzes the output from the gjiten dictionary
 # and outputs lines into a file that agree with the input format of kioku.
 

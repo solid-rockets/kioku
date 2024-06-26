@@ -7,12 +7,14 @@ This may change in the future.
 
 -----
 
-Current utilities:
+Main utilities:
 
 test - for testing with flashcards.
 insert - for transferring new words from a CSV-like format to JSON.
 reset - for resetting the weights (scores) of all words in a JSON file.
 dict2lines.py - transform gjiten formatted entries in kioku formatted lines.
+
+Other utilities':
 strip.py - strips kanji words of all surrounding hiragana.
 count.py - counts kanji words.
 
