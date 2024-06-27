@@ -1,6 +1,8 @@
 import sys
 import json
 import tkinter
+import random
+import math
 
 import common
 
@@ -51,6 +53,15 @@ def getArgument(arg_name):
       return arg.split("=")[1]
   return ""
 
+def randomizeOrder(list):
+  halved_len = int(math.floor(len(list) / 2))
+
+  for i in range(0, halved_len): # Only to half of the list.
+    anti_i = len(list) - 1 - i
+
+    if random.randint(0, 1) >= 1:
+      list[i], list[anti_i] = list[anti_i], list[i]
+  
 # MAIN LOGIC
 # Other args.
 # --max=<number> or -m=<number> - number of cards to test.
@@ -101,6 +112,9 @@ for score in scores:
 
           if len(testing_cards) >= max_cards:
               break
+          
+# Introduce light randomness.
+randomizeOrder(testing_cards)
 
 # Testing cards selected - link them circularly.
 for i in range(len(testing_cards)):
