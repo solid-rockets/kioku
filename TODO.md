@@ -3,6 +3,13 @@
   - mouse clicks to advance the test: left incorrect, right correct.
   - show trans-test score of a given word.
   - introduce minor randomness on selected cards.
+  - have the user setup env. variables before using the program.
+    - KIOKU_PATH (optional, useful)
+    - KIOKU_DECKS (req.)
+      - test (done)
+      - reset
+      - insert
+    - EDICT_PATH (req. in the future)
 
 - extra:
   - automated script for generating study lists

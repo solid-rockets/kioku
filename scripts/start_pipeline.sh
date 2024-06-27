@@ -13,4 +13,4 @@ fi
 # Proceed with the pipeline.
 python3 $KIOKU_PATH/dict2lines.py $1.txt
 python3 $KIOKU_PATH/insert.py $1.txt $1.json $1.json
-python3 $KIOKU_PATH/test.py $1.json
+python3 $KIOKU_PATH/test.py $1

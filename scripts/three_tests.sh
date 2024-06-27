@@ -11,6 +11,6 @@ if [ -z "$1" ]; then
 fi
 
 # Proceed with the pipeline.
-python3 $KIOKU_PATH/test.py $1.json --max=40 --correct=1
-python3 $KIOKU_PATH/test.py $1.json --max=20 --correct=2
-python3 $KIOKU_PATH/test.py $1.json --max=10 --correct=4
+python3 $KIOKU_PATH/test.py $1 --max=40 --correct=1
+python3 $KIOKU_PATH/test.py $1 --max=20 --correct=2
+python3 $KIOKU_PATH/test.py $1 --max=10 --correct=4

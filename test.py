@@ -1,15 +1,20 @@
 import sys
 import json
 import tkinter
+import os
 
 # GLOBAL VARIABLES.
-filename = ""
+decks_dir = os.getenv("KIOKU_DECKS")
+deck_name = ""
+deck_path = ""
+
 cards = []
 testing_cards = []
 current_card = None
-# TODO: args for the following two lines.
+
 max_cards = 50 # Default for now; will provide arg in the future.
 max_correct = 1 # How many times card is shown before it is removed from the test.
+
 num_correct_total = 0
 screen_state = "front" # or "back"
 
@@ -48,12 +53,23 @@ def getArgument(arg_name):
   return ""
 
 # MAIN LOGIC
-# Get filename from args
-if len(sys.argv) < 2:
-  print("Usage: python reset.py <filename>")
+# Make sure the KIOKU_DECKS environment variable is set.
+if not decks_dir:
+  print("Please set the path to decks' directory in the KIOKU_DECKS environment variable.")
   exit()
 
-filename = sys.argv[1]
+# Get the deck name from the command line.
+# The deck name is the first argument.
+if len(sys.argv) < 2:
+  print("Please provide the deck name.")
+  exit()
+
+deck_name = sys.argv[1]
+deck_path = os.path.join(decks_dir, deck_name + ".json")
+
+if not os.path.exists(deck_path):
+  print(f"Deck '{deck_name}' does not exist: {deck_path}")
+  exit()
 
 # Other args.
 # --max=<number> or -m=<number> - number of cards to test.
@@ -75,7 +91,7 @@ for arg in sys.argv:
     max_cards = int(arg[3:])
 
 # Load the JSON file cards.
-with open(filename, "r") as file:
+with open(deck_path, "r") as file:
   json_data = json.load(file)
   cards = json_data["cards"]
 
@@ -187,5 +203,5 @@ for card in testing_cards:
 # Save the updated cards to the file.
 json_data["cards"] = cards
 
-with open(filename, "w") as file:
+with open(deck_path, "w") as file:
   json.dump(json_data, file)
