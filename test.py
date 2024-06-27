@@ -1,16 +1,15 @@
 import sys
 import json
 import tkinter
-import os
+
+import common
 
 # GLOBAL VARIABLES.
-decks_dir = os.getenv("KIOKU_DECKS")
-deck_name = ""
-deck_path = ""
-
 cards = []
 testing_cards = []
 current_card = None
+
+deck_path = common.getDeckPathOrExit()
 
 max_cards = 50 # Default for now; will provide arg in the future.
 max_correct = 1 # How many times card is shown before it is removed from the test.
@@ -53,24 +52,6 @@ def getArgument(arg_name):
   return ""
 
 # MAIN LOGIC
-# Make sure the KIOKU_DECKS environment variable is set.
-if not decks_dir:
-  print("Please set the path to decks' directory in the KIOKU_DECKS environment variable.")
-  exit()
-
-# Get the deck name from the command line.
-# The deck name is the first argument.
-if len(sys.argv) < 2:
-  print("Please provide the deck name.")
-  exit()
-
-deck_name = sys.argv[1]
-deck_path = os.path.join(decks_dir, deck_name + ".json")
-
-if not os.path.exists(deck_path):
-  print(f"Deck '{deck_name}' does not exist: {deck_path}")
-  exit()
-
 # Other args.
 # --max=<number> or -m=<number> - number of cards to test.
 full_arg = getArgument("--max")

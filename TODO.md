@@ -7,7 +7,7 @@
     - KIOKU_PATH (optional, useful)
     - KIOKU_DECKS (req.)
       - test (done)
-      - reset
+      - reset (done)
       - insert
     - EDICT_PATH (req. in the future)
 
