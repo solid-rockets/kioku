@@ -179,6 +179,7 @@ root.mainloop()
 # Remove the "is_testing_over" and "next" mark from all cards after the test.
 for card in testing_cards:
   del card["is_testing_over"]
+  del card["correct_num"]
   del card["next"]
 
 # Save the updated cards to the file.
