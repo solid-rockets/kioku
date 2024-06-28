@@ -23,10 +23,9 @@ import common
 
 # GLOBAL VARIABLES.
 cards = []
-must_read_old_json = False
 word_lines = []
 
-deck_path = common.getDeckPathOrExit()
+deck_path = common.getDeckPath(False)
 lines_path = common.getLinesPathOrExit()
 
 # HELPER FUNCTIONS.

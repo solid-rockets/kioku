@@ -6,7 +6,7 @@ import json
 import common
 
 # Global variables
-deck_path = common.getDeckPathOrExit()
+deck_path = common.getDeckPath()
 cards = []
 
 # Load the JSON file and reset all cards to 0.

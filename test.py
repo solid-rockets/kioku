@@ -11,7 +11,7 @@ cards = []
 testing_cards = []
 current_card = None
 
-deck_path = common.getDeckPathOrExit()
+deck_path = common.getDeckPath()
 
 max_cards = 50 # Default for now; will provide arg in the future.
 max_correct = 1 # How many times card is shown before it is removed from the test.

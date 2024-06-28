@@ -29,12 +29,12 @@ def getDeckDirOrExit():
 
   return deck_dir
 
-def getDeckPathOrExit():
+def getDeckPath(makeSureDeckExists = True):
   deck_dir = getDeckDirOrExit()
   deck_name = getDeckNameOrExit() + ".json"
   deck_path = os.path.join(deck_dir, deck_name)
 
-  if not os.path.exists(deck_path):
+  if makeSureDeckExists and not os.path.exists(deck_path):
     print(f"Deck doesn't exist: {deck_path}")
     exit()
 
