@@ -7,12 +7,11 @@
 # <JP word in kanji or hiragana> (<hiragana>) (<class attr.>)* <English definition>
 
 import re
-import json
-import sys
+import common
 
 # GLOBAL VARIABLES.
 running = True
-input_file_path = ""
+input_file_path = common.getLinesPathOrExit()
 
 # HELPER FUNCTIONS.
 def getJapaneseWord(input_line):
@@ -67,13 +66,6 @@ def convertToKiokuLine(input_line):
       return f"{jpWord}:{reading}{breakpoint}{enDefinition}"
 
 # MAIN LOGIC.
-# Get the filename from args.
-if len(sys.argv) < 2:
-  print("Usage: python3 dict2lines.py <input_file_path>")
-  exit()
-
-input_file_path = sys.argv[1]
-
 with open(input_file_path, "a") as file:
   while running:
     input_line = input()

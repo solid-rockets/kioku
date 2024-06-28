@@ -8,7 +8,7 @@
     - KIOKU_DECKS (req.)
       - test (done)
       - reset (done)
-      - insert
+      - insert (done)
     - EDICT_PATH (req. in the future)
 
 - extra:

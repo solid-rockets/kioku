@@ -17,16 +17,17 @@
 # }
 
 import json
-import sys
+import os
+
+import common
 
 # GLOBAL VARIABLES.
 cards = []
 must_read_old_json = False
 word_lines = []
 
-input_wordlist_path = ""
-input_json_path = ""
-output_json_path = ""
+deck_path = common.getDeckPathOrExit()
+lines_path = common.getLinesPathOrExit()
 
 # HELPER FUNCTIONS.
 def getAnyDuplicate(list, front):
@@ -37,33 +38,13 @@ def getAnyDuplicate(list, front):
     return None
 
 # MAIN LOGIC.
-# Get filenames from args: input of fresh, input of old JSON, and output JSON
-# Case of no old JSON file
-if len(sys.argv) == 3:
-    input_wordlist_path = sys.argv[1]
-    output_json_path = sys.argv[2]
-    must_read_old_json = False
-
-# Case of old JSON file
-if len(sys.argv) == 4:
-    input_wordlist_path = sys.argv[1]
-    input_json_path = sys.argv[2]
-    output_json_path = sys.argv[3]
-    must_read_old_json = True
-
-# Inform the user about what filenames need to be provided
-if len(sys.argv) < 3:
-    print("Usage: python insert.py <input_wordlist_path> <output_json_path>")
-    print("Usage: python insert.py <input_wordlist_path> <input_json_path> <output_json_path>")
-    exit()
-
 # Open the wordlist file
-with open(input_wordlist_path, "r") as file:
+with open(lines_path, "r") as file:
     word_lines = file.readlines()
 
 # Load old JSON file
-if must_read_old_json:
-  with open(input_json_path, "r") as file:
+if os.path.exists(deck_path):
+  with open(deck_path, "r") as file:
       old_json = json.load(file)
       cards = old_json["cards"]
 
@@ -90,5 +71,5 @@ for line in word_lines:
         })
 
 # Output the result into a JSON file
-with open(output_json_path, "w") as file:
+with open(deck_path, "w") as file:
     json.dump({"cards": cards}, file)

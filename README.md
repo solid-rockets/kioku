@@ -7,6 +7,12 @@ This may change in the future.
 
 -----
 
+The following environment variables must be setup for proper operation:
+
+KIOKU_DECKS : where files with decks and lines for inserting are found.
+
+-----
+
 Main utilities:
 
 test - for testing with flashcards.
