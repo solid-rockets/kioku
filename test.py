@@ -22,15 +22,17 @@ screen_state = "front" # or "back"
 root = tkinter.Tk()
 root.title("kioku")
 root.geometry("800x400")
+root.configure(bg="black")
 
 score_text_var = tkinter.StringVar()
 front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
 
 # score, front, back
-tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15)).pack()
-tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60)).pack()
-tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30)).pack()
+# TODO: remove repetition.
+tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15), bg="black", fg="white").pack()
+tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60), bg="black", fg="white").pack()
+tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30), bg="black", fg="white").pack()
 
 # HELPER FUNCTIONS.
 def checkAnyLeftToTest():
