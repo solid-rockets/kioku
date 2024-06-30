@@ -63,6 +63,9 @@ def randomizeOrder(list):
 
     if random.randint(0, 1) >= 1:
       list[i], list[anti_i] = list[anti_i], list[i]
+
+def addNewlinesToBackString(string):
+  return string.replace("　", "\n").replace("<br>", "\n").replace(";", "\n")
   
 # MAIN LOGIC
 # Other args.
@@ -155,8 +158,7 @@ def key_handler(event):
 
   # Update the screen
   if screen_state == "front": # Why? Actions ON any key.
-    back_text_var.set(current_card["back"].replace("　", "\n"))
-    back_text_var.set(current_card["back"].replace("<br>", "\n"))
+    back_text_var.set(addNewlinesToBackString(current_card["back"]))
     screen_state = "back"
     
   elif screen_state == "back":
