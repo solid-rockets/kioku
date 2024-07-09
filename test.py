@@ -11,7 +11,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 400
 
 # GLOBAL VARIABLES.
-cards = []
+cards = common.readDeck()
 testing_cards = []
 current_card = None
 
@@ -92,11 +92,6 @@ for arg in sys.argv:
     max_cards = int(arg[6:])
   elif arg.startswith("-m="):
     max_cards = int(arg[3:])
-
-# Load the JSON file cards.
-with open(deck_path, "r") as file:
-  json_data = json.load(file)
-  cards = json_data["cards"]
 
 # Select the cards for testing.
 # Default is 50.
@@ -212,7 +207,4 @@ for card in testing_cards:
   del card["next"]
 
 # Save the updated cards to the file.
-json_data["cards"] = cards
-
-with open(deck_path, "w") as file:
-  json.dump(json_data, file)
+common.writeDeck(cards)

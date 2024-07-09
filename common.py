@@ -7,6 +7,7 @@
 # IMPORTS.
 import os
 import sys
+import json
 
 # LOGIC.
 def getDeckNameOrExit():
@@ -47,3 +48,18 @@ def getLinesPathOrExit():
   lines_path = os.path.join(deck_dir, lines_name)
 
   return lines_path
+
+def readDeck():
+  deck_path = getDeckPath()
+  cards = []
+
+  with open(deck_path, "r") as file:
+    json_data = json.load(file)
+    cards = json_data["cards"]
+
+  return cards
+
+def writeDeck(cards):
+  deck_path = getDeckPath()
+  with open(deck_path, "w") as file:
+    json.dump({"cards": cards}, file)

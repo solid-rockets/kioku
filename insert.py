@@ -1,21 +1,6 @@
 # Opens the wordlist file, transforms into JSON format, and outputs
 # the result into a JSON file.
 
-# Input format of flashcard:
-# <front>:<back>
-# ...
-
-# Output format of a flashcard (JSON):
-# {
-#   "cards": [
-#     {
-#       "front": "<front>",
-#       "back": "<back>",
-#       "score": 0
-#     },
-#     ...
-# }
-
 import json
 import os
 
@@ -41,11 +26,12 @@ def getAnyDuplicate(list, front):
 with open(lines_path, "r") as file:
     word_lines = file.readlines()
 
-# Load old JSON file
-if os.path.exists(deck_path):
-  with open(deck_path, "r") as file:
-      old_json = json.load(file)
-      cards = old_json["cards"]
+# Load old JSON file if any.
+if not os.path.exists(deck_path):
+  with open(deck_path, "w") as file:
+    json.dump({"cards": []}, file)
+
+cards = common.readDeck()
 
 # Append the new flashcards to the list
 for line in word_lines:
@@ -70,5 +56,4 @@ for line in word_lines:
         })
 
 # Output the result into a JSON file
-with open(deck_path, "w") as file:
-    json.dump({"cards": cards}, file)
+common.writeDeck(cards)
