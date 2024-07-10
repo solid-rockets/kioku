@@ -32,7 +32,7 @@ def getDeckDirOrExit():
 
 def getDeckPath(makeSureDeckExists = True):
   deck_dir = getDeckDirOrExit()
-  deck_name = getDeckNameOrExit() + ".json"
+  deck_name = getDeckNameOrExit() + ".txt"
   deck_path = os.path.join(deck_dir, deck_name)
 
   if makeSureDeckExists and not os.path.exists(deck_path):
@@ -49,17 +49,48 @@ def getLinesPathOrExit():
 
   return lines_path
 
+def convertLineIntoCard(line):
+  stripped = line.strip()
+  if stripped[0] == "#":
+    return None
+
+  fields = stripped.split(":")
+  front = fields[0].strip()
+  back = fields[1].strip()
+  score = 0
+
+  if len(fields) > 2:
+    score = int(fields[2].strip())
+
+  return {
+    "front": front,
+    "back": back,
+    "score": score
+  }
+
+def convertCardIntoLine(card):
+  return f"{card['front']} : {card['back']} : {card['score']}"
+
+# Read all lines and convert them into cards.
 def readDeck():
   deck_path = getDeckPath()
   cards = []
+  lines = []
 
   with open(deck_path, "r") as file:
-    json_data = json.load(file)
-    cards = json_data["cards"]
+    lines = file.readlines()
+
+  for line in lines:
+    card = convertLineIntoCard(line)
+    if card:
+      cards.append(card)
 
   return cards
 
+# Write all cards back as lines.
 def writeDeck(cards):
   deck_path = getDeckPath()
+
   with open(deck_path, "w") as file:
-    json.dump({"cards": cards}, file)
+    for card in cards:
+      file.write(convertCardIntoLine(card) + "\n")

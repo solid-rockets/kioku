@@ -1,30 +1,21 @@
 The basic idea is to develop/test out basic logic with console + tkinter,
-but that eventually will be replaced to a large extent with a web interface.
+but that eventually a web interface will be created.
+
 The plan is to setup this program on a server (local, or cloud, etc.) and
 allow multiple users to connect to it.
 
 Main scripts:
 1. test - for testing myself with flashcards. Default is 50 of worst score, newer first, correct once.
-2. insert - for transferring new words from a CSV-like format to JSON.
-3. reset - for resetting the weights (scores) of all words.
+2. reset - for resetting the weights (scores) of all words.
 
 Side scripts:
-4. dict2lines.py - transform gjiten format entries into kioku format lines.
-5. check4doubles.py - checks lines for doubles.
+1. dict2lines.py - transform gjiten format entries into kioku format lines.
+2. check4doubles.py - checks lines for doubles.
 
 -----
 
 Input format of flashcard:
-<front>:<back>:<score>
-...
-
-[DEPRECATED] Output format of a flashcard (JSON):
-{
-  "cards": [
-    {
-      "front": "<front>",
-      "back": "<back>",
-      "score": 0
-    },
-    ...
-}
+<0>:<1>:<2>
+0: front
+1: back
+2: score (will be automatically generated if not present)
