@@ -7,7 +7,6 @@
 # IMPORTS.
 import os
 import sys
-import json
 
 # LOGIC.
 def getDeckNameOrExit():
@@ -18,10 +17,10 @@ def getDeckNameOrExit():
   return sys.argv[1]
 
 def getDeckDirOrExit():
-  deck_dir = os.getenv("KIOKU_DECKS")
+  deck_dir = os.getenv("KIOKU_PATH")
 
   if not deck_dir:
-    print("Please set the path to decks' directory in the KIOKU_DECKS environment variable.")
+    print("Please set the path to decks' directory in the KIOKU_PATH environment variable.")
     exit()
 
   if not os.path.exists(deck_dir):

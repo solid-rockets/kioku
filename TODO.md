@@ -5,9 +5,7 @@
   - mouse clicks to advance the test: left incorrect, right correct.
   - show trans-test score of a given word.
   - have the user setup env. variables before using the program.
-    - KIOKU_PATH (optional, useful)
-    - KIOKU_DECKS (req.) (done)
-    - EDICT_PATH (req. in the future)
+    - KIOKU_PATH (req.) (done)
 
 - extra:
   - line doubles checker - eliminate double lines in any deck.

@@ -2,9 +2,6 @@
 # If two lines start with the same first word,
 # the program will print out the line numbers and the word.
 
-import os
-import sys
-
 import common
 
 # GLOBAL VARIABLES.

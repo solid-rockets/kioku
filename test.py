@@ -1,5 +1,4 @@
 import sys
-import json
 import tkinter
 import random
 import math

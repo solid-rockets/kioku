@@ -1,4 +1,3 @@
-# Formats of files are discussed in "insert.py"
 import common
 
 # Global variables
