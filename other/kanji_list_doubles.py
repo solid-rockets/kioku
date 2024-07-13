@@ -1,4 +1,4 @@
-# NOTE: gets each kanji from a line.
+# NOTE: gets kanji from Chinese loanwords in a text.
 
 # Kanji frequency list was obtained from:
 # https://scriptin.github.io/kanji-frequency/
@@ -16,7 +16,7 @@ MAX_KANJI = 3000
 
 # GLOBAL VARIABLES
 kanjidic_path = "/home/ado/kanjidic"
-kanji_src_path = "/home/ado/kanji.csv" # Will read any source, line by line, kanji by kanji.
+kanji_src_path = "/home/ado/wiki_freq.txt" # Will read any source, line by line, kanji by kanji.
 
 all_kanjidic_lines = []
 
@@ -26,9 +26,9 @@ all_kanjidic_lines = []
 # Katakana: 30A0-30FF
 # Kanji: 4E00-9FAF , common and uncommon
 # Ext A: 3400-4DBF , rare
-hiragana_regex = r'[\u3040-\u309F]+'
 katakana_regex = r'[\u30A0-\u30FF]+'
-kanji_regex = r'[\u4E00-\u9FAF\u3400-\u4DBF]+'
+kanji_word_regex = r'[\u4E00-\u9FAF\u3400-\u4DBF]{2,}'
+kanji_regex = r'[\u4E00-\u9FAF\u3400-\u4DBF]'
 
 all_kanji_dict = {}
 
@@ -53,8 +53,11 @@ with open(kanjidic_path, "r") as file:
 # Read all unique kanji from each line.
 with open(kanji_src_path, "r") as file:
   for line in file:
-    kanji_matches = re.findall(kanji_regex, line)
-    addMatchesToDict(kanji_matches, all_kanji_dict)
+    kanji_words = re.findall(kanji_word_regex, line)
+
+    for word in kanji_words:
+      kanji_matches = re.findall(kanji_regex, word)
+      addMatchesToDict(kanji_matches, all_kanji_dict)
 
 # Get katakana readings from kanjidic.
 for kanji in all_kanji_dict:
