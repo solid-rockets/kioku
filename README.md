@@ -7,22 +7,31 @@ This may change in the future.
 
 -----
 
-The following environment variables must be setup for proper operation:
+The following environment variables will be inserted into '.bashrc' as
+part of the installation process:
 
 KIOKU_DECKS : where files with decks and lines for inserting are found.
 
 -----
 
-Main utilities:
+The basic idea is to develop/test out basic logic with console + tkinter,
+but that eventually a web interface will be created.
 
-test - for testing with flashcards.
-insert - for transferring new words from a CSV-like format to JSON.
-reset - for resetting the weights (scores) of all words in a JSON file.
-dict2lines.py - transform gjiten formatted entries in kioku formatted lines.
+The plan is to setup this program on a server (local, or cloud, etc.) and
+allow multiple users to connect to it.
 
-Other utilities':
-strip.py - strips kanji words of all surrounding hiragana.
-count.py - counts kanji words.
+Main scripts:
+1. test - for testing myself with flashcards. Default is 50 of worst score, newer first, correct once.
+2. reset - for resetting the weights (scores) of all words.
 
-start_pipeline.sh - transforms from gjiten, inserts into a JSON, and starts a test.
-three_tests.sh - runs three tests using test.py with varying level of repetitiveness (for focus).
+Side scripts:
+1. dict2lines.py - transform gjiten format entries into kioku format lines.
+2. check4doubles.py - checks lines for doubles.
+
+-----
+
+Input format of flashcard:
+<0>:<1>:<2>
+0: front
+1: back
+2: score (will be automatically generated if not present)
