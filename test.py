@@ -84,6 +84,11 @@ full_arg = getArgument("--correct")
 if full_arg != "":
   max_correct = int(full_arg)
 
+# --title - title of the deck.
+full_arg = getArgument("--title")
+if full_arg != "":
+  root.title(f"kioku - {full_arg}")
+
 # Analyze arguments.
 # Get max from arg: "--max=<number>" or "-m=<number>"
 for arg in sys.argv:
