@@ -87,7 +87,7 @@ if full_arg != "":
 # --title - title of the deck.
 full_arg = getArgument("--title")
 if full_arg != "":
-  root.title(f"kioku - {full_arg}")
+  root.title(f"kioku - {full_arg.replace('--', ' ')}")
 
 # Analyze arguments.
 # Get max from arg: "--max=<number>" or "-m=<number>"
