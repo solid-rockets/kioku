@@ -28,18 +28,27 @@ root.geometry(f"{SCREEN_WIDTH}x{SCREEN_HEIGHT}")
 root.configure(bg="black")
 
 score_text_var = tkinter.StringVar()
-current_index_var = tkinter.StringVar()
+cards_remaining_var = tkinter.StringVar()
 front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
 
 # score, front, back
 # TODO: remove repetition.
 tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15), bg="black", fg="white").place(x=10, y=10)
-tkinter.Label(root, textvariable=current_index_var, font=("Arial", 15), bg="black", fg="white").place(x=SCREEN_WIDTH - 115, y=10)
+tkinter.Label(root, textvariable=cards_remaining_var, font=("Arial", 15), bg="black", fg="white").place(x=SCREEN_WIDTH - 135, y=10)
 tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60), bg="black", fg="white").pack()
 tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30), bg="black", fg="white").pack()
 
 # HELPER FUNCTIONS.
+def countLeftToTest():
+  count = 0
+
+  for card in testing_cards:
+    if not card["is_testing_over"]:
+      count += 1
+
+  return count
+
 def checkAnyLeftToTest():
   for card in testing_cards:
     if not card["is_testing_over"]:
@@ -155,7 +164,7 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 front_text_var.set(current_card["front"])
 back_text_var.set("")
 score_text_var.set(getScoreString())
-current_index_var.set(f"Card: {1}/{max_cards}")
+cards_remaining_var.set(f"Remaining: {max_cards}")
 
 def key_handler(event):
   global current_card
@@ -197,8 +206,7 @@ def key_handler(event):
 
   # Always update these.
   score_text_var.set(getScoreString())
-  card_index = current_card["index"]
-  current_index_var.set(f"Card: {card_index}/{max_cards}")
+  cards_remaining_var.set(f"Remaining: {countLeftToTest()}")
 
 root.bind("<Key>", key_handler)
 root.mainloop()
