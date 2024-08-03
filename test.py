@@ -22,12 +22,15 @@ max_correct = 1 # How many times card is shown before it is removed from the tes
 num_correct_total = 0
 screen_state = "front" # or "back"
 
+seen_cards_num = 0
+
 root = tkinter.Tk()
 root.title("kioku")
 root.geometry(f"{SCREEN_WIDTH}x{SCREEN_HEIGHT}")
 root.configure(bg="black")
 
 score_text_var = tkinter.StringVar()
+seen_text_var = tkinter.StringVar()
 cards_remaining_var = tkinter.StringVar()
 front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
@@ -35,6 +38,7 @@ back_text_var = tkinter.StringVar()
 # score, front, back
 # TODO: remove repetition.
 tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15), bg="black", fg="white").place(x=10, y=10)
+tkinter.Label(root, textvariable=seen_text_var, font=("Arial", 15), bg="black", fg="white").place(x=10, y=35)
 tkinter.Label(root, textvariable=cards_remaining_var, font=("Arial", 15), bg="black", fg="white").place(x=SCREEN_WIDTH - 135, y=10)
 tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60), bg="black", fg="white").pack()
 tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30), bg="black", fg="white").pack()
@@ -164,18 +168,21 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 front_text_var.set(current_card["front"])
 back_text_var.set("")
 score_text_var.set(getScoreString())
+seen_text_var.set(f"Seen: {seen_cards_num}")
 cards_remaining_var.set(f"Remaining: {max_cards}")
 
 def key_handler(event):
   global current_card
   global num_correct_total
   global screen_state
+  global seen_cards_num
 
   letter = event.char
 
   # Update the screen
   if screen_state == "front": # Why? Actions ON any key.
     back_text_var.set(addNewlinesToBackString(current_card["back"]))
+    seen_cards_num += 1
     screen_state = "back"
     
   elif screen_state == "back":
@@ -206,6 +213,7 @@ def key_handler(event):
 
   # Always update these.
   score_text_var.set(getScoreString())
+  seen_text_var.set(f"Seen: {seen_cards_num}")
   cards_remaining_var.set(f"Remaining: {countLeftToTest()}")
 
 root.bind("<Key>", key_handler)
