@@ -50,6 +50,10 @@ def getLinesPathOrExit():
 
 def convertLineIntoCard(line):
   stripped = line.strip()
+  
+  if len(stripped) == 0:
+    return None
+  
   if stripped[0] == "#":
     return None
 
