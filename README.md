@@ -37,3 +37,5 @@ Input format of flashcard:
 0: front
 1: back
 2: score (will be automatically generated if not present)
+
+Empty lines and comment lines (in which text follows #) will be preserved.

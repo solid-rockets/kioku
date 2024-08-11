@@ -10,7 +10,8 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 400
 
 # GLOBAL VARIABLES.
-cards = common.readDeck()
+raw_cards = common.readDeck()
+cards = common.filterForTestCards(raw_cards)
 testing_cards = []
 current_card = None
 
@@ -227,4 +228,7 @@ for card in testing_cards:
   del card["next"]
 
 # Save the updated cards to the file.
-common.writeDeck(cards)
+# Using raw cards because:
+# 1) The scores will be updated in the filtered cards with "raw_cards" keeps track of.
+# 2) We need to keep the comments and empty lines.
+common.writeDeck(raw_cards)

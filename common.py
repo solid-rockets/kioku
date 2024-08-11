@@ -2,7 +2,12 @@
 # The following file contains helper functions only.
 
 # NOTES
-# All decks are JSON files.
+# All decks are text files whose lines are converted into JSON objects.
+# 
+# There are three types of lines in a deck:
+# 1) Empty lines - empty cards; "type": "empty".
+# 2) Comment lines - start with "#"; "type": "comment".
+# 3) Card lines - contain front, back, and score; "type": "card".
 
 # IMPORTS.
 import os
@@ -51,12 +56,20 @@ def getLinesPathOrExit():
 def convertLineIntoCard(line):
   stripped = line.strip()
   
+  # Empty line - empty card.
   if len(stripped) == 0:
-    return None
+    return {
+      "type": "empty",
+    }
   
+  # Empty
   if stripped[0] == "#":
-    return None
+    return {
+      "type": "comment",
+      "text": stripped
+    }
 
+  # Otherwise, it's a card.
   fields = stripped.split(":")
   front = fields[0].strip()
   back = fields[1].strip()
@@ -66,13 +79,19 @@ def convertLineIntoCard(line):
     score = int(fields[2].strip())
 
   return {
+    "type": "card",
     "front": front,
     "back": back,
     "score": score
   }
 
 def convertCardIntoLine(card):
-  return f"{card['front']} : {card['back']} : {card['score']}"
+  if card["type"] == "empty":
+    return ""
+  elif card["type"] == "comment":
+    return card["text"]
+  else:
+    return f"{card['front']} : {card['back']} : {card['score']}"
 
 # Read all lines and convert them into cards.
 def readDeck():
@@ -84,9 +103,7 @@ def readDeck():
     lines = file.readlines()
 
   for line in lines:
-    card = convertLineIntoCard(line)
-    if card:
-      cards.append(card)
+    cards.append(convertLineIntoCard(line))
 
   return cards
 
@@ -97,3 +114,6 @@ def writeDeck(cards):
   with open(deck_path, "w") as file:
     for card in cards:
       file.write(convertCardIntoLine(card) + "\n")
+
+def filterForTestCards(cards):
+  return [card for card in cards if card["type"] == "card"]
