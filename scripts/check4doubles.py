@@ -6,35 +6,25 @@ import common
 
 # GLOBAL VARIABLES.
 word_lines = []
-
-lines_path = common.getLinesPathOrExit()
+cards = common.readDeck()
 
 # HELPER FUNCTIONS.
-def getFirstWord(line):
-    return line.split(":")[0].strip()
 
 # MAIN LOGIC.
-# Open the wordlist file
-with open(lines_path, "r") as file:
-    word_lines = file.readlines()
-
 # Check for doubles
 words = {}
 index = 1 # Line numbers start at 1.
-for line in word_lines:
-    stripped = line.strip()
-    if stripped[0] == "#":
-        continue
+for card in cards:
+  # Only read lines that are actual flashcards.
+  if card["type"] == "card":
+    front = card["front"]
 
-    first_word = getFirstWord(stripped)
-    #print(first_word)
-
-    if first_word in words:
-        words[first_word] = words[first_word] + [index]
+    if front in words:
+      words[front] = words[front] + [index]
     else:
-        words[first_word] = [index]
+      words[front] = [index]
 
-    index += 1
+  index += 1
 
 for word in words:
     if len(words[word]) > 1:
