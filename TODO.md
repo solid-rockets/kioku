@@ -1,5 +1,3 @@
 - main:
   - write documentation on how to use the various tools.
-  - prepare a retrograde design of the whole program.
   - mouse clicks to advance the test: left incorrect, right correct.
-  - show trans-test score of a given word.

@@ -33,6 +33,8 @@ root.configure(bg="black")
 score_text_var = tkinter.StringVar()
 seen_text_var = tkinter.StringVar()
 cards_remaining_var = tkinter.StringVar()
+trans_test_score_var = tkinter.StringVar()
+
 front_text_var = tkinter.StringVar()
 back_text_var = tkinter.StringVar()
 
@@ -41,6 +43,8 @@ back_text_var = tkinter.StringVar()
 tkinter.Label(root, textvariable=score_text_var, font=("Arial", 15), bg="black", fg="white").place(x=10, y=10)
 tkinter.Label(root, textvariable=seen_text_var, font=("Arial", 15), bg="black", fg="white").place(x=10, y=35)
 tkinter.Label(root, textvariable=cards_remaining_var, font=("Arial", 15), bg="black", fg="white").place(x=SCREEN_WIDTH - 135, y=10)
+tkinter.Label(root, textvariable=trans_test_score_var, font=("Arial", 15), bg="black", fg="white").place(x=SCREEN_WIDTH - 135, y=35)
+
 tkinter.Label(root, textvariable=front_text_var, font=("Arial", 60), bg="black", fg="white").pack()
 tkinter.Label(root, textvariable=back_text_var, font=("Arial", 30), bg="black", fg="white").pack()
 
@@ -168,6 +172,8 @@ max_cards = len(testing_cards) # For proper score in case of small decks.
 # Remove the "is_testing_over" mark from all cards after the test.
 front_text_var.set(current_card["front"])
 back_text_var.set("")
+trans_test_score_var.set(f"Card score: {current_card['score']}")
+
 score_text_var.set(getScoreString())
 seen_text_var.set(f"Seen: {seen_cards_num}")
 cards_remaining_var.set(f"Remaining: {max_cards}")
@@ -210,6 +216,8 @@ def key_handler(event):
 
     front_text_var.set(current_card["front"])
     back_text_var.set("")
+    trans_test_score_var.set(f"Card score: {current_card['score']}")
+    
     screen_state = "front"
 
   # Always update these.
