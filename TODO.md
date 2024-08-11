@@ -1,6 +1,6 @@
 - main:
   - write documentation on how to use the various tools.
   - prepare a retrograde design of the whole program.
-  - in preparation for the web version, start splitting logic out into separate files.
   - mouse clicks to advance the test: left incorrect, right correct.
   - show trans-test score of a given word.
+  - move script files into their own folder, "scripts".
