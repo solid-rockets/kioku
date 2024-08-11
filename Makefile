@@ -1,5 +1,5 @@
 install:
-	@python3 install.py full
+	@python3 scripts/install.py full
 
 update:
-	@python3 install.py
+	@python3 scripts/install.py

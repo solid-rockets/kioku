@@ -22,9 +22,6 @@ arg = ""
 if len(sys.argv) > 1:
   arg = sys.argv[1]
 
-common = ["common.py"]
-scripts = ["dict2lines.py", "reset.py", "test.py", "check4doubles.py"]
-
 # HELPER FUNCTIONS
 def ensureKiokuPathExists():
   global scripts_path
@@ -55,13 +52,7 @@ def copyScriptsToKiokuPath():
   global scripts_path
 
   os.makedirs(scripts_path, exist_ok=True)
-
-  # Copy the scripts.
-  for lib in common:
-    os.system(f"cp {lib} {scripts_path}")
-
-  for script in scripts:
-    os.system(f"cp {script} {scripts_path}")
+  os.system(f"cp scripts/*.py {scripts_path}")
     
 def installKiokuShellScript():
   global scripts_path
