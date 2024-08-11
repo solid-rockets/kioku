@@ -5,7 +5,8 @@ cards = common.readDeck()
 
 # Load JSON, reset scores, and save.
 for card in cards:
-  card["score"] = 0
+  if card["type"] == "card":
+    card["score"] = 0
 
 common.writeDeck(cards)
 

@@ -125,17 +125,17 @@ scores.sort()
 for score in scores:
   # Break if we have enough cards.
   if len(testing_cards) >= max_cards:
-      break
+    break
   
   # Otherwise, add the cards with the current score.
   for card in cards:
-      if card["score"] == score:
-          testing_cards.append(card)
-          card["is_testing_over"] = False
-          card["correct_num"] = 0
+    if card["score"] == score:
+      testing_cards.append(card)
+      card["is_testing_over"] = False
+      card["correct_num"] = 0
 
-          if len(testing_cards) >= max_cards:
-              break
+      if len(testing_cards) >= max_cards:
+        break
           
 # Introduce light randomness.
 randomizeOrder(testing_cards)
@@ -145,7 +145,7 @@ for i in range(len(testing_cards)):
   testing_cards[i]["index"] = i + 1
 
   if i == len(testing_cards) - 1:
-      testing_cards[i]["next"] = testing_cards[0]
+    testing_cards[i]["next"] = testing_cards[0]
   else:
     testing_cards[i]["next"] = testing_cards[i + 1]
 
