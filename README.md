@@ -2,7 +2,7 @@ kioku is a program I have been writing for personal use to study Japanese.
 
 Written in Python 3 - earlier versions of Python are not supported.
 
-Of course, the flashcard part can be used for any language, but the tooling
+The flashcard part of the program can be used for any language, but the tooling
 was specifically designed for Japanese.
 
 This may change in the future.
@@ -25,12 +25,15 @@ allow multiple users to connect to it.
 Main scripts:
 1. test - for testing myself with flashcards. Default is 50 of worst score, newer first, correct once.
 2. reset - for resetting the weights (scores) of all words.
-
-Side scripts:
-1. dict2lines.py - transform gjiten format entries into kioku format lines.
-2. check4doubles.py - checks lines for doubles.
+3. dict2lines.py - transform gjiten format entries into kioku format lines.
+4. check4doubles.py - checks lines for doubles.
 
 -----
+
+There are three types of a card:
+1. empty
+2. comment
+3. card (flashcard)
 
 Input format of flashcard:
 <0>:<1>:<2>
