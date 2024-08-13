@@ -20,8 +20,17 @@ KIOKU_PATH : decks at folder level, scripts in "scripts".
 Main scripts:
 1. test - for testing myself with flashcards. Default is 50 of worst score, newer first, correct once.
 2. reset - for resetting the weights (scores) of all words.
-3. dict2lines.py - transform gjiten format entries into kioku format lines.
+3. dict2lines.py - transform gjiten format entries into kioku format lines; will consider first group in parentheses to be hiragana.
 4. check4doubles.py - checks lines for doubles.
+
+## Arguments for "kioku test"
+All arguments must be provided in the following format in commandline:
+- --arg=(value)
+
+The following arguments are supported:
+1. --max / -m: how many cards to use in the current session. Ex. --max=15 will cycle through 15 cards.
+2. --correct / -c: how many times should each card be guessed correctly before it's considered done.
+3. --title / -t: appends a string to kioku's title bar. Double hyphens are interpreted as spaces.
 
 ## Technical details
 There are three types of a card:
