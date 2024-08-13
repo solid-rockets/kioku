@@ -76,7 +76,8 @@ def getArgument(arg_name):
   for arg in sys.argv:
     if arg_name in arg:
       return arg.split("=")[1]
-  return ""
+    
+  return None
 
 def randomizeOrder(list):
   halved_len = int(math.floor(len(list) / 2))
@@ -93,27 +94,19 @@ def addNewlinesToBackString(string):
 # MAIN LOGIC
 # Other args.
 # --max=<number> or -m=<number> - number of cards to test.
-full_arg = getArgument("--max")
-if full_arg != "":
+full_arg = getArgument("--max") or getArgument("-m")
+if full_arg is not None:
   max_cards = int(full_arg)
 
 # --correct=<number> or -c=<number> - number of times card is shown before it is removed from the test.
-full_arg = getArgument("--correct")
-if full_arg != "":
+full_arg = getArgument("--correct") or getArgument("-c")
+if full_arg is not None:
   max_correct = int(full_arg)
 
 # --title - title of the deck.
-full_arg = getArgument("--title")
-if full_arg != "":
+full_arg = getArgument("--title") or getArgument("-t")
+if full_arg is not None:
   root.title(f"kioku - {full_arg.replace('--', ' ')}")
-
-# Analyze arguments.
-# Get max from arg: "--max=<number>" or "-m=<number>"
-for arg in sys.argv:
-  if arg.startswith("--max="):
-    max_cards = int(arg[6:])
-  elif arg.startswith("-m="):
-    max_cards = int(arg[3:])
 
 # Select the cards for testing.
 # Default is 50.
