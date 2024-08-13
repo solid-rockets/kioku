@@ -1,3 +1,4 @@
 - main:
   - write documentation on how to use the various tools.
   - mouse clicks to advance the test: left incorrect, right correct.
+  - add "man" pages for kioku commands.
