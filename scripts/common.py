@@ -23,6 +23,7 @@ def getDeckNameOrExit():
 
 def getDeckDirOrExit():
   deck_dir = os.getenv("KIOKU_PATH")
+  deck_dir = deck_dir + "/decks" if deck_dir else None
 
   if not deck_dir:
     print("Please set the path to decks' directory in the KIOKU_PATH environment variable.")
