@@ -13,5 +13,7 @@ common.py +-> weblogic.py --> webfront.py
           +-> dict2lines.py
           |
           +-> check4doubles.py
+          |
+          +-> insert.py
 
 install.py
