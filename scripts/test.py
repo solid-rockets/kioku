@@ -89,7 +89,7 @@ def randomizeOrder(list):
       list[i], list[anti_i] = list[anti_i], list[i]
 
 def addNewlinesToBackString(string):
-  return string.replace("　", "\n").replace("<br>", "\n").replace(";", "\n")
+  return string.replace(";", "\n")
   
 # MAIN LOGIC
 # Other args.

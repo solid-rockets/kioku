@@ -57,7 +57,7 @@ def convertToKiokuLine(input_line):
     reading = reading.strip().replace("(", "").replace(")", "")
 
   # Build the line and return.
-  breakpoint = "<br>" if reading != "" else ""
+  breakpoint = ";" if reading != "" else ""
 
   if first_letter == "　":
     # For special cases, where both kanji and reading are present, but I need the reading only.
