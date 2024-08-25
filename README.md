@@ -22,6 +22,7 @@ Main scripts:
 2. reset - for resetting the weights (scores) of all words.
 3. dict2lines.py - transform gjiten format entries into kioku format lines; will consider first group in parentheses to be hiragana.
 4. check4doubles.py - checks lines for doubles.
+5. insert.py - inserts new cards by asking for front and back. Can be exited with "!exit".
 
 ## Arguments for "kioku test"
 All arguments must be provided in the following format in commandline:
