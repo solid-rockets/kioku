@@ -26,7 +26,9 @@ for card in cards:
 
 # Print the statistics.
 print(f"Total number of cards: {total_cards}")
-for score in scores:
+ordered = sorted(scores.keys())
+
+for score in ordered:
   number = scores[score]
   percentage = number / total_cards * 100
   print(f"Score {score}: {number} ({percentage:.2f}%)")
