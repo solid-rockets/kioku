@@ -1,12 +1,8 @@
 The current design is as follows.
-NOTE: it may be a good idea to extract even more logic into common.py when
-      I start working on the web version...
 
 -----     -----     -----     -----     -----
 
-common.py +-> weblogic.py --> webfront.py
-          |
-          +-> test.py
+common.py +-> test.py
           |
           +-> reset.py
           |
@@ -15,5 +11,9 @@ common.py +-> weblogic.py --> webfront.py
           +-> check4doubles.py
           |
           +-> insert.py
+          |
+          +-> stats.py
+          |
+          +-> list.py
 
 install.py
