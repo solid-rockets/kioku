@@ -17,8 +17,10 @@ current_card = None
 
 deck_path = common.getDeckPath()
 
-max_cards = 50 # Default for now; will provide arg in the future.
+max_cards = 50
 max_correct = 1 # How many times card is shown before it is removed from the test.
+
+min_score = 0 # Minimum score for a card to be included in the test.
 
 num_correct_total = 0
 screen_state = "front" # or "back"
@@ -91,6 +93,15 @@ def randomizeOrder(list):
 def addNewlinesToBackString(string):
   return string.replace(";", "\n")
   
+def filterScores(scores, min_score):
+  filtered_scores = []
+
+  for s in scores:
+    if s >= min_score:
+      filtered_scores.append(s)
+
+  return filtered_scores
+
 # MAIN LOGIC
 # Other args.
 # --max=<number> or -m=<number> - number of cards to test.
@@ -108,6 +119,11 @@ full_arg = getArgument("--title") or getArgument("-t")
 if full_arg is not None:
   root.title(f"kioku - {full_arg.replace('--', ' ')}")
 
+# --min=<number> or -n=<number> - minimum score for a card to be included in the test.
+full_arg = getArgument("--min") or getArgument("-n")
+if full_arg is not None:
+  min_score = int(full_arg)
+
 # Select the cards for testing.
 # Default is 50.
 # Ordering is based on the score - worst score goes first.
@@ -117,6 +133,7 @@ if full_arg is not None:
 scores = [card["score"] for card in cards]
 scores = list(set(scores))
 scores.sort()
+scores = filterScores(scores, min_score)
 
 # Get the cards with the worst scores.
 for score in scores:
